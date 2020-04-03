@@ -1,0 +1,32 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+    - uses: actions/checkout@v2 # IMPORTANT: use v2 and do not set any fetch-depth flags because the action will unshallow your repo automatically
+    - uses: akhileshns/heroku-deploy@v2.0.2 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "asp-dotnet-todo" #Must be unique in Heroku
+        heroku_email: "stevealden.77@gmail.com"
+        buildpack: "jincod/dotnetcore" 
