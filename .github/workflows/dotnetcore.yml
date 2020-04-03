@@ -17,14 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test
-    - uses: actions/checkout@v2 # IMPORTANT: use v2 and do not set any fetch-depth flags because the action will unshallow your repo automatically
-    - uses: akhileshns/heroku-deploy@v2.0.2 # This is the action
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "dotnet-todo-backend" #Must be unique in Heroku
-        heroku_email: "stevealden.77@gmail.com"
-        buildpack: "jincod/dotnetcore" 
+      run: dotnet test --no-restore --verbosity normal
