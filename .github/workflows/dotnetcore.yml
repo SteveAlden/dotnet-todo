@@ -27,6 +27,6 @@ jobs:
     - uses: akhileshns/heroku-deploy@v2.0.2 # This is the action
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "DotNet-Todo" #Must be unique in Heroku
+        heroku_app_name: "asp-dotnet-todo" #Must be unique in Heroku
         heroku_email: "andrew.buttigieg@gmail.com"
         buildpack: "jincod/dotnetcore" 
