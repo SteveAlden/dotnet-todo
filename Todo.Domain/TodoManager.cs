@@ -35,8 +35,10 @@ namespace Todo.Domain
         public Todos Patch(Todos todo)
         {
             var existTodo = todos.FirstOrDefault(t => t.Id == todo.Id);
-            existTodo = todo;
-            return existTodo;
+            todos.Remove(existTodo);
+            todos.Add(todo);
+            //existTodo = todo;
+            return todo;
         }
         public void Delete(int id)
         {
